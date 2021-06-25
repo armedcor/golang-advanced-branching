@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -83,6 +84,18 @@ func main() {
 	// Generate ratings for the different vehicles
 	generateRating()
 	// Print ratings for the different vehicles
+	for _, veh := range inventory {
+		switch v := veh.(type) {
+		case car:
+			v.carDetails()
+		case bike:
+			v.bikeDetails()
+		case truck:
+			v.truckDetails()
+		default:
+			fmt.Println("Are you sure this Vehicle Type exists")
+		}
+	}
 }
 
 func readJSONFile() Values {
@@ -136,4 +149,31 @@ func generateRating() {
 		}
 		vehicleResult[v.Name] = vehResult
 	}
+}
+
+func showRating(model string) {
+	var ratingFound bool = false
+	for m, r := range vehicleResult {
+		if m == model {
+			fmt.Println("Total Ratings:%v\tPositive:%v\tNegative:%v\tNeutral:%v", r.feedbackTotal, r.feedbackPositive, r.feedbackNegative, r.feedbackNeutral)
+			ratingFound = true
+		}
+	}
+	if !ratingFound {
+		fmt.Println("No rating for this vehicle")
+	}
+}
+func (c *car) carDetails() {
+	fmt.Println("\n%-5v: %-8v: %-12v ", "Car", c.make, c.model)
+	showRating(c.model)
+}
+
+func (b *bike) bikeDetails() {
+	fmt.Println("\n%-5v: %-8v: %-12v ", "Bike", b.make, b.model)
+	showRating(b.model)
+}
+
+func (t *truck) truckDetails() {
+	fmt.Println("\n%-5v: %-8v: %-12v ", "Truck", t.make, t.model)
+	showRating(t.model)
 }
