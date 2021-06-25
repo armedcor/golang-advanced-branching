@@ -34,7 +34,7 @@ type feedbackResult struct {
 	feedbackTotal    int
 	feedbackPositive int
 	feedbackNegative int
-	feedbackNutural  int
+	feedbackNeutral  int
 }
 
 var vehicleResult map[string]feedbackResult
