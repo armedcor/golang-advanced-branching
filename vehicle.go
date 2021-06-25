@@ -31,6 +31,7 @@ type Model struct {
 }
 
 type feedbackResult struct {
+	feedbackTotal    int
 	feedbackPositive int
 	feedbackNegative int
 	feedbackNutural  int
